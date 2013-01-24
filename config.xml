@@ -3,7 +3,7 @@
 <widget	xmlns					= "http://www.w3.org/ns/widgets"
 				xmlns:gap 		= "http://phonegap.com/ns/1.0"
 				id 						= "ee.ooker.limprocket"
-				version   = "0.0.1">
+				version   = "2.3.0">
 	
 	<name>Limprocket</name>
 
@@ -13,4 +13,8 @@
 	<author href="https://build.phonegap.com" email="support@phonegap.com">
 		Oliver Maaker
 	</author>
+	
+	<preference name="phonegap-version" value="2.3.0" />
+	<preference name="orientation"      value="default" />
+	
 </widget>
