@@ -8,15 +8,22 @@
 			height:100%;
 		}
 		body{
-			margin:0; padding:20px 0 0 0; width:100%;
-			background:#999;
+			margin:0; padding:0; width:100%;
+			background:#000;
 		}
 		#canvasH{
 			width:320px; height:480px; margin:0 auto;
 			background:#dedede;
 		}
 	</style>
+	
+</head>
+<body onload="bodyLoaded()">
+
+	<div id="canvasH"><canvas id="game" width="320" height="480"></canvas></div>
+	
 	<!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>-->
+	
 	<script src="http://code.createjs.com/easeljs-0.5.0.min.js"></script>
 	<script src="http://code.createjs.com/preloadjs-0.2.0.min.js"></script>
 	<script src="http://code.createjs.com/soundjs-0.3.0.min.js"></script>
@@ -32,12 +39,6 @@
 	<script src="js/ooker/Speedometer.js"></script>
 	<script src="js/ooker/Lane.js"></script>
 	<script src="js/ooker/Button.js"></script>
-	
-</head>
-<body onload="Game()">
-
-	<div id="canvasH"><canvas id="game" width="320" height="480"></canvas></div>
-	
-
+	<script src="js/phonegap/cordova-2.3.0.js"></script>
 </body>
 </html>

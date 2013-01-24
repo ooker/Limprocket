@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<widget	xmlns					= "http://www.w3.org/ns/widgets"
+				xmlns:gap 		= "http://phonegap.com/ns/1.0"
+				id 						= "ee.ooker.limprocket"
+				version   = "0.0.1">
+	
+	<name>Limprocket</name>
+
+	<description>
+		Just for fun... testing Createjs and Phonegap (Android accelometer)
+	</description>
+	<author href="https://build.phonegap.com" email="support@phonegap.com">
+		Oliver Maaker
+	</author>
+</widget>

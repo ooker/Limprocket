@@ -5,10 +5,20 @@ Javascriptiga Android accelometeri kallale??? Possible?
 
  */
 
+function bodyLoaded(){
+	document.addEventListener("deviceready", onDeviceReady, false);
+	Game();
+}
+
+function onDeviceReady(){
+	Game();
+	console.log("Houston? This is our little Limp Rocket calling...");
+}
 var speed = 1;
 var ship;
 var skoor = 0;
 var root;
+var accelID = null;
 
 (function(){
 	var Game = function(){
@@ -51,6 +61,7 @@ var root;
 	p.preload;
 	
 	p.initialize = function (){
+		//console.log("Houston? This is our little Limp Rocket calling...");
 		root = this;
 		this.browser = BrowserDetect.OS;
 		this.manifest = [
@@ -77,16 +88,22 @@ var root;
 		this.PreloadAll();
   }
 	
-	
-	
 	p.PreloadAll = function(){
 		this.preload = new createjs.PreloadJS(false);
-		this.preload.onComplete = this.doneLoading;
+		this.preload.onComplete = this.letsGo;
 		//this.preload.onFileLoad = this.preloadProcess;
 		this.preload.installPlugin(createjs.SoundJS);
 		this.preload.loadManifest(this.manifest);
 	}
-	p.doneLoading = function(){
+	
+	p.onAccelSuccess = function(acceleration) {
+		console.log('Acceleration X: ' + acceleration.x +	'Acceleration Y: ' + acceleration.y + 'Acceleration Z: ' + acceleration.z + 'Timestamp: ' + acceleration.timestamp );
+	}
+	p.onAccelError = function() {
+		console.log('Accelerator Error!');
+	}
+	p.letsGo = function(){
+	
 		p.stage.removeAllChildren();
 		p.createLane();
 		p.createShip();
@@ -95,9 +112,9 @@ var root;
 		p.createUI();
 		createjs.Ticker.setFPS(30);
 		createjs.Ticker.addListener(p.tick);
-		//p.playSoundLoop("sfxWind");
+		var accelOptions = {frequency: 100};
+		navigator.accelerometer.watchAcceleration(onAccelChange, p.onAccelError,  accelOptions);
 	}
-	
 	p.tick = function(){
 		p.update();
 		//p.stage.update();
@@ -260,6 +277,22 @@ var root;
 			default:
 				break;
 		}
+	}
+	function onAccelChange(accel){
+
+		/*if(accel.x < 0){
+			p.move.speedX-= accel.x*0.3;
+		} else if(accel.x > 0){
+			p.move.speedX+= accel.x*0.3;
+		}*/
+		p.move.speedX+= accel.x*0.3;
+		
+		/*if(accel.x < 0){
+			p.move.speedX-= 0.1;
+		} else if(accel.x > 0){
+			p.move.speedX+= 0.1;
+		}*/
+		
 	}
 	
 	p.playSound = function(soundID){
