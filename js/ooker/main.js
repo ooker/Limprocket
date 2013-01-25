@@ -14,7 +14,7 @@ function onDeviceReady(){
 	Game();
 	console.log("Houston? This is our little Limp Rocket calling...");
 }
-var speed = 1;
+var speed = 0;
 var ship;
 var skoor = 0;
 var root;
@@ -36,8 +36,8 @@ var accelID = null;
 	p.friends = new Array();
 	p.speedometer;
 	p.lane;
-	p.speedMIN = 1;
-	p.speedMAX = 4;
+	p.speedMIN = 2;
+	p.speedMAX = 5;
 	p.endMargin = -200;
 	p.gameOn = true;
 	
@@ -45,6 +45,7 @@ var accelID = null;
   document.onkeydown = onKeyDown;
 	p.move = {
 		speedX: 0,
+		speedY: 0,
 		left: false,
 		right: false,
 		up: false,
@@ -68,7 +69,7 @@ var accelID = null;
 			{id:'ship', src:'assets/ship2.png'},
 			{id:'enemy', src:'assets/enemy2.png'},
 			{id:'friend', src:'assets/friend2.png'},
-			{id:'lane', src:'assets/rada.gif'},
+			//{id:'lane', src:'assets/rada.gif'},
 			{id:'sfxBad', src:'assets/sfx/impact_bad.ogg'},
 			{id:'sfxGood', src:'assets/sfx/impact_good.ogg'},
 			{id:'sfxKlikk', src:'assets/sfx/klikk.ogg'},
@@ -129,6 +130,7 @@ var accelID = null;
 		}
   }
 	p.updateMovement = function(){
+		// x-telg
 		if(this.ship.x > 0 && this.ship.x < this.maxW){
 			this.ship.x += p.move.speedX;
 		} else {
@@ -139,6 +141,17 @@ var accelID = null;
 			}
 			this.move.speedX = 0;
 		}
+		// y-telg
+		if(this.ship.y > 100 && this.ship.y < this.maxH-60){
+			this.ship.y += p.move.speedY;
+		} else {
+			if(this.ship.y <= 100){
+				this.ship.y = 101;
+			} else if(this.ship.y >= this.maxH-60){
+				this.ship.y = this.maxH-61;
+			}
+			this.move.speedY = 0;
+		}
 		if(p.lane.y >= this.endMargin){
 			this.gameOn = false;
 			p.lane.gameOn = false;
@@ -147,20 +160,18 @@ var accelID = null;
 			//createjs.Ticker.removeListener(p.tick);
 			//createjs.Ticker.pause();
 		}
-		
+		speed = 1 + Math.floor((480 - this.ship.y)*0.006);
 		this.ship.base.skewX = this.move.speedX*5;
 		this.ship.base.skewY = this.move.speedX*2;
 	}
 	p.speedUp = function(){
 		if(speed <= p.speedMAX && this.gameOn == true){
 			speed++;
-			TweenLite.to(p.ship, 1, {y:p.maxH - speed*80});
 		}
 	}
 	p.speedDown = function(){
 		if(speed > p.speedMIN && this.gameOn == true){
 			speed--;
-			TweenLite.to(p.ship, 1, {y:p.maxH - speed*80});
 		}
 	}
 	p.collide = function(){
@@ -195,7 +206,7 @@ var accelID = null;
 	}
 	
 	p.createLane = function(){
-    this.lane = new Lane(this.preload.getResult('lane').result);
+    this.lane = new Lane();
 		this.lane.y = -4480+480;
     this.stage.addChild(this.lane);
 	}
@@ -207,7 +218,7 @@ var accelID = null;
 		ship = this.ship;
 	}
 	p.createEnemies = function(){
-    for(var i = 0; i < 10; i++){
+    for(var i = 0; i < 6; i++){
       var enemy = new Enemy(this.preload.getResult('enemy').result);
       enemy.x = this.getRandom(20,300);
       enemy.y = this.getRandom(-600, -20);
@@ -279,20 +290,8 @@ var accelID = null;
 		}
 	}
 	function onAccelChange(accel){
-
-		/*if(accel.x < 0){
-			p.move.speedX-= accel.x*0.3;
-		} else if(accel.x > 0){
-			p.move.speedX+= accel.x*0.3;
-		}*/
-		p.move.speedX+= accel.x*0.3;
-		
-		/*if(accel.x < 0){
-			p.move.speedX-= 0.1;
-		} else if(accel.x > 0){
-			p.move.speedX+= 0.1;
-		}*/
-		
+		p.move.speedX += accel.x*0.3;
+		p.move.speedY -= accel.y*0.2;
 	}
 	
 	p.playSound = function(soundID){

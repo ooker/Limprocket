@@ -1,6 +1,6 @@
 ﻿(function(){
-	function Lane(img){
-		this.initialize(img);
+	function Lane(){
+		this.initialize();
 	}
 
 	var p = Lane.prototype = new createjs.Container();
@@ -11,19 +11,19 @@
 	p.Container_initialize = p.initialize;
 	p.Container_tick = p._tick;
 
-	p.initialize = function(img){
+	p.initialize = function(){
 		this.Container_initialize();    
 		this.base = new createjs.Shape( );
-		this.base.graphics.beginBitmapFill(img).drawRect(0, 0, 320, 4480);
+		//this.base.graphics.beginBitmapFill(img).drawRect(0, 0, 320, 4480);
+		this.base.graphics.beginFill("#a47171").drawRect(0, 0, 320, 4480);
 		this.addChild(this.base);
-		
 		
 		//tekstid
 		
 		this.tf = new createjs.Text("FINIŠ", "bold 72px Arial", "#8d5353");
 		this.tf.maxWidth = 320;
 		this.tf.textAlign = "center";
-		this.tf.x = 160;
+		this.tf.x = 170;
 		this.tf.y = 480+100;
 		this.addChild(this.tf);
 				

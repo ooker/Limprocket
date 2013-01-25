@@ -3,18 +3,19 @@
 <widget	xmlns					= "http://www.w3.org/ns/widgets"
 				xmlns:gap 		= "http://phonegap.com/ns/1.0"
 				id 						= "ee.ooker.limprocket"
-				version   = "2.2.0">
+				version   = "0.0.2">
 	
 	<name>Limprocket</name>
 
 	<description>
-		Just for fun... testing Createjs and Phonegap (Android accelometer)
+		Just for fun... testing Createjs and Phonegap (accelometer)
 	</description>
 	<author href="https://build.phonegap.com" email="support@phonegap.com">
 		Oliver Maaker
 	</author>
 	
 	<preference name="phonegap-version" value="2.2.0" />
-	<preference name="orientation"      value="default" />
+	<preference name="orientation" 			value="portrait" />
+	<preference name="fullscreen" 			value="true" />
 	
 </widget>
