@@ -111,7 +111,7 @@ var accelID = null;
 		p.createEnemies();
 		p.createFriends();
 		p.createUI();
-		createjs.Ticker.setFPS(30);
+		createjs.Ticker.setFPS(10);
 		createjs.Ticker.addListener(p.tick);
 		var accelOptions = {frequency: 100};
 		navigator.accelerometer.watchAcceleration(onAccelChange, p.onAccelError,  accelOptions);
@@ -157,8 +157,6 @@ var accelID = null;
 			p.lane.gameOn = false;
 			p.speedometer.gameOn = false;
 			p.speedometer.gameOver();
-			//createjs.Ticker.removeListener(p.tick);
-			//createjs.Ticker.pause();
 		}
 		speed = 1 + Math.floor((480 - this.ship.y)*0.006);
 		this.ship.base.skewX = this.move.speedX*5;
@@ -190,8 +188,6 @@ var accelID = null;
 				}
 				skoor -= 3000;
 				p.playSound("sfxBad");
-				//this.stage.removeChild(this.enemies[i]);
-				//this.enemies.splice(i,1);
 			}
 		}
 		for(var f=0; f<this.friends.length; f++){
