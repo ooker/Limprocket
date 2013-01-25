@@ -41,8 +41,6 @@ var accelID = null;
 	p.endMargin = -200;
 	p.gameOn = true;
 	
-	document.onkeyup = onKeyUp;
-  document.onkeydown = onKeyDown;
 	p.move = {
 		speedX: 0,
 		speedY: 0,
@@ -51,13 +49,6 @@ var accelID = null;
 		up: false,
 		down: false
   };
-	p.keys = {
-		space: 32,
-		left: 37,
-		right: 39,
-		up: 38,
-		down: 40
-	};
 	
 	p.preload;
 	
@@ -69,7 +60,6 @@ var accelID = null;
 			{id:'ship', src:'assets/ship2.png'},
 			{id:'enemy', src:'assets/enemy2.png'},
 			{id:'friend', src:'assets/friend2.png'},
-			//{id:'lane', src:'assets/rada.gif'},
 			{id:'sfxBad', src:'assets/sfx/impact_bad.ogg'},
 			{id:'sfxGood', src:'assets/sfx/impact_good.ogg'},
 			{id:'sfxKlikk', src:'assets/sfx/klikk.ogg'},
@@ -81,9 +71,8 @@ var accelID = null;
 		this.maxW = this.canvas.width;
 		this.maxH = this.canvas.height;
 		createjs.Touch.enable(this.stage);
-		//this.stage.enableMouseOver(10);
-		this.stage.mouseMoveOutside = true;
-		this.stage.mouseEventsEnabled = true;
+		this.stage.mouseMoveOutside = false;
+		this.stage.mouseEventsEnabled = false;
 		
 		this.stage.update();
 		this.PreloadAll();
@@ -92,7 +81,6 @@ var accelID = null;
 	p.PreloadAll = function(){
 		this.preload = new createjs.PreloadJS(false);
 		this.preload.onComplete = this.letsGo;
-		//this.preload.onFileLoad = this.preloadProcess;
 		this.preload.installPlugin(createjs.SoundJS);
 		this.preload.loadManifest(this.manifest);
 	}
@@ -104,7 +92,6 @@ var accelID = null;
 		console.log('Accelerator Error!');
 	}
 	p.letsGo = function(){
-	
 		p.stage.removeAllChildren();
 		p.createLane();
 		p.createShip();
@@ -118,8 +105,6 @@ var accelID = null;
 	}
 	p.tick = function(){
 		p.update();
-		//p.stage.update();
-		//console.log("update");
   }
 	
 	p.update = function(){
@@ -252,44 +237,12 @@ var accelID = null;
 		this.createUI();
 	}
 	
-	function onKeyUp(e){
-		switch(e.keyCode){
-			case p.keys.left:
-				TweenLite.to(p.move, 1, {speedX:0});
-				break;
-			case p.keys.right:
-				TweenLite.to(p.move, 1, {speedX:0});
-				break;
-			default:
-				break;
-		}
-	}
-	function onKeyDown(e){
-		switch(e.keyCode){
-			case p.keys.left:
-				p.move.speedX-= 0.1;
-				break;
-			case p.keys.right:
-				p.move.speedX+= 0.1;
-				break;
-			case p.keys.space:
-				p.move.speedX = 0;
-				break;
-			case p.keys.up:
-				p.speedUp();
-				break;
-			case p.keys.down:
-				p.speedDown();
-				break;
-			default:
-				break;
-		}
-	}
+	
 	function onAccelChange(accel){
 		//p.move.speedX += accel.x*0.3;
 		//p.move.speedY -= accel.y*0.2;
-		p.move.speedX = accel.x;
-		p.move.speedY = accel.y;
+		p.move.speedX = -accel.x*0.3;
+		p.move.speedY = accel.y*0.3;
 	}
 	
 	p.playSound = function(soundID){
