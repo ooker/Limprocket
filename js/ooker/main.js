@@ -132,7 +132,7 @@ var accelID = null;
 	p.updateMovement = function(){
 		// x-telg
 		if(this.ship.x > 0 && this.ship.x < this.maxW){
-			this.ship.x += p.move.speedX;
+			this.ship.x += p.move.speedX*5;
 		} else {
 			if(this.ship.x <= 0){
 				this.ship.x = 1;
@@ -143,7 +143,7 @@ var accelID = null;
 		}
 		// y-telg
 		if(this.ship.y > 100 && this.ship.y < this.maxH-60){
-			this.ship.y += p.move.speedY;
+			this.ship.y += p.move.speedY*5;
 		} else {
 			if(this.ship.y <= 100){
 				this.ship.y = 101;
@@ -158,7 +158,7 @@ var accelID = null;
 			p.speedometer.gameOn = false;
 			p.speedometer.gameOver();
 		}
-		speed = 1 + Math.floor((480 - this.ship.y)*0.006);
+		speed = 1 + Math.floor((480 - this.ship.y)*0.01);
 		this.ship.base.skewX = this.move.speedX*5;
 		this.ship.base.skewY = this.move.speedX*2;
 	}
@@ -286,8 +286,10 @@ var accelID = null;
 		}
 	}
 	function onAccelChange(accel){
-		p.move.speedX += accel.x*0.3;
-		p.move.speedY -= accel.y*0.2;
+		//p.move.speedX += accel.x*0.3;
+		//p.move.speedY -= accel.y*0.2;
+		p.move.speedX = accel.x;
+		p.move.speedY = accel.y;
 	}
 	
 	p.playSound = function(soundID){
